@@ -50,10 +50,8 @@ public class Fifo implements FifoQueue, FifoHead{
 
 	@Override
 	public void save(int iSig) {
-		if(file.contains(iSig)) {
-			if(file.indexOf(iSig)>=indiceHead) {
-			indiceHead = file.lastIndexOf(iSig)+1;
-			}
+		while(this.getSize()>0 &&(int)this.getHead()==iSig) {
+			indiceHead++;
 		}
 	}
 
