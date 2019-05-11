@@ -23,7 +23,7 @@ public class FifoTest {
 	/** Objects used by the test */
 	private Object o3, o4, o5;
 	/** Objects used by the test */
-	private Object i4, i5;
+	private Object i4, i5, i6, i7;
 
 	/**
 	 * Builds objects needed for testing purpose.
@@ -35,6 +35,8 @@ public class FifoTest {
 		o5 = 5.0; // new Double(5);
 		i4 = 4; // new Integer(4);
 		i5 = 5; //new Integer(5);
+		i6 = 6;
+		i7 = 7;
 	}
 
 	/**
@@ -47,6 +49,8 @@ public class FifoTest {
 		o5 = null;
 		i4 = null;
 		i5 = null;
+		i6 = null;
+		i7 = null;
 	}
 
 	/**
@@ -152,8 +156,20 @@ public class FifoTest {
 			// save( int )
 			fifoHead.save(5);
 			assertEquals(0, fifoHead.getSize());
+			fifoQueue.add(6);
+			fifoQueue.add(7);
+			assertEquals(2, fifoHead.getSize());
+			assertEquals(i6, fifoHead.getHead());
+			fifoHead.save(7); //can't save 7 because 7 is not Head of the fifo
+			assertEquals(i6, fifoHead.getHead());
+			assertEquals(2, fifoHead.getSize());
+			fifoHead.save(6); //6 can be saved since it is Head of the fifo
+			assertEquals(i7, fifoHead.getHead());
+			assertEquals(1, fifoHead.getSize());
+			fifoHead.remove(); //remove 7
 			// reset savings
 			fifoHead.save(null);
+			fifoHead.remove();
 			assertEquals(5, fifoHead.getSize());
 			// remove and check remaining signals
 			fifoHead.remove();
